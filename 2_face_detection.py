@@ -1,48 +1,57 @@
 import cv2
 
-# Load the face detection classifier (comes with OpenCV)
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# Load the Haar cascade classifier for frontal face detection
+faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Initialize the camera
-cap = cv2.VideoCapture(0)
+# Initialize the camera (0 is usually the default webcam)
+videoCapture = cv2.VideoCapture(0)
 
-if not cap.isOpened():
+# Check if the camera was successfully opened
+if not videoCapture.isOpened():
     print("Error: Could not open camera")
     exit()
 
 print("Face detection started!")
 print("Press 'q' to quit")
 
+# Main loop for continuous video capture and face detection
 while True:
-    # Capture frame
-    ret, frame = cap.read()
+    # Capture a single frame
+    success, frame = videoCapture.read()
     
-    if not ret:
+    # If the frame couldn't be read, exit the loop
+    if not success:
         print("Error: Can't receive frame")
         break
     
-    # Convert to grayscale (face detection works better on grayscale)
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Convert the frame to grayscale for better face detection
+    grayscaleFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
-    # Detect faces
-    faces = face_cascade.detectMultiScale(gray, 1.25, 6, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
+    # Detect faces in the grayscale frame
+    faces = faceCascade.detectMultiScale(
+        grayscaleFrame,
+        scaleFactor=1.25,
+        minNeighbors=6,
+        minSize=(30, 30),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
     
-    # Draw rectangles around detected faces
+    # Draw rectangles around each detected face and label them
     for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-        cv2.putText(frame, 'Face Detected', (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        cv2.putText(frame, 'Face Detected', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
     
-    # Show number of faces detected
+    # Show total number of detected faces on the screen
     cv2.putText(frame, f'Faces: {len(faces)}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     
-    # Display the frame
+    # Display the annotated frame
     cv2.imshow('Face Detection - Press Q to quit', frame)
     
-    # Break on 'q' key
+    # Exit the loop if the user presses the 'q' key
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Clean up
-cap.release()
+# Release camera and destroy all OpenCV windows
+videoCapture.release()
 cv2.destroyAllWindows()
 print("Face detection completed!")
