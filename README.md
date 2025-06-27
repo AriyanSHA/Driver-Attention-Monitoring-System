@@ -2,13 +2,13 @@
 Real-time computer vision project for detecting driver fatigue, blinks, and drowsiness using OpenCV.  This project aims to support driver safety by identifying closed eyes, blink frequency, and drowsiness patterns via a webcam or in-vehicle camera system, crucial for reducing the risk of road accidents.
 
 ## Versions
-### Basic Version – Blink Detection via Haar Cascades
+### Basic Version
 
 * Uses OpenCV Haar cascades for face and eye detection
 
 * Counts blinks and raises an alert if eyes stay closed too long
 
-### Advanced Version (Optional Extension)
+### Advanced Version
 
 * Uses dlib and 68-point face landmarks
 
