@@ -57,6 +57,11 @@ Real-time computer vision project for detecting driver fatigue, blinks, and drow
 
 * shape_predictor_68_face_landmarks.dat (download required separately from Dlib’s model zoo)
 
+## 📺 Demo Video
+
+Watch the demo here: [https://youtu.be/o59g6A9KPzU](https://youtu.be/o59g6A9KPzU)
+
+
 ## How to run
 1. Download the facial landmark model file shape_predictor_68_face_landmarks.dat by running: ``` 5_download_landsmarks.py ```
 2. Run ``` 5_blink_detection.py ```, make sure you are in the same directory.
