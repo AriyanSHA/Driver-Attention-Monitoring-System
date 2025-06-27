@@ -2,16 +2,21 @@
 Real-time computer vision project for detecting driver fatigue, blinks, and drowsiness using OpenCV.  This project aims to support driver safety by identifying closed eyes, blink frequency, and drowsiness patterns via a webcam or in-vehicle camera system, crucial for reducing the risk of road accidents.
 
 ## Versions
-### Basic Version (Simple Eye & Blink Detection)
-→ Uses OpenCV’s Haar cascades to detect faces and open eyes, estimating blink frequency and identifying drowsiness through frame analysis.
+### Basic Version – Blink Detection via Haar Cascades
+
+* Uses OpenCV Haar cascades for face and eye detection
+
+* Counts blinks and raises an alert if eyes stay closed too long
 
 ### Advanced Version (Optional Extension)
 
-* Deep Learning–based face/eye detection (e.g., Dlib, Mediapipe, or CNN models)
+* Uses dlib and 68-point face landmarks
 
-* Eye Aspect Ratio (EAR) with dlib for better accuracy
+* Computes Eye Aspect Ratio (EAR) for precise eye state detection
 
-* Integration with vehicle systems or embedded hardware (e.g., Raspberry Pi, Jetson Nano)
+* Detects drowsiness based on sustained EAR drop
+
+* Optional deployment on Jetson Nano or Raspberry Pi
 
 ## Features
 * Real-time video capture from webcam
