@@ -86,8 +86,11 @@ while True:
     # Detect faces in the grayscale frame
     faces = detector(gray, 0)
     
+    # Initialize timer
     currentTime = time.time()
-    
+
+    ear = None
+
     for face in faces:
         # Get 68 facial landmark coordinates
         shape = predictor(gray, face)
@@ -147,8 +150,11 @@ while True:
     
     # Display real-time statistics
     cv2.putText(frame, f"Blinks: {totalBlinks}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-    cv2.putText(frame, f"EAR: {ear:.3f}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-    cv2.putText(frame, f"Threshold: {EYE_AR_THRESH}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+    if ear is not None:
+        cv2.putText(frame, f"EAR: {ear:.3f}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    else:
+        cv2.putText(frame, "EAR: N/A", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    cv2.putText(frame, f"Threshold: {EYE_AR_THRESH}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
     cv2.putText(frame, f"Faces: {len(faces)}", (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
     
     # Show duration of closed eyes if active
